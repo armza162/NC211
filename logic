@@ -1,0 +1,21 @@
+from logic import *
+import termcolor
+message1 = Symbol("โปรแกรมแสดงข้อความ Number Format Exception")
+message2 = Symbol("โปรแกรมแสดงข้อความ Divided by zero")
+message3 = Symbol("โปรแกรมแสดงข้อความ Segmentation Fault")
+message4 = Symbol("โปรแกรมแสดงข้อความ Low Memory")
+randomErorr1 = Symbol("โปรแกรมมีข้อผิดพลาดในคำสั่ง Random r = new Random(Double.parseDouble(x))")
+randomErorr2 = Symbol("โปรแกรมมีข้อผิดพลาดในคำสั่ง double y = a / b;")
+randomErorr3 = symbol("โปรแกรมมีข้อผิดพลาดในคำสั่ง Object o = new Object()")
+knowledge = And(
+    Implication(Not(message1), Not(randomErorr1)),
+    Implication(message2, randomErorr2),
+    Implication(message3, randomErorr1),
+    and(message4, Not(message1)),
+    or(message3, randomErorr3)
+)
+def check_knowledge(knowledge):
+    for s in symbols:
+        if model_check(knowledge, s):
+            termcolor.cprint(f"{s}", "green")
+check_knowledge(knowledge)
